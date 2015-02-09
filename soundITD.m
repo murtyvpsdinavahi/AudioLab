@@ -1,7 +1,8 @@
-function modifiedSound = soundITD(originalSound,Fs,ITD,lagChannel)
+function [modifiedSound,LeftChannel, RightChannel] = soundITD(originalSound,Fs,ITD,lagChannel)
     if size(originalSound,1)> size(originalSound,2)
         originalSound = originalSound';
     end
+    
     
     if (size(originalSound,1) == 1)
         tempSound = originalSound;
@@ -19,5 +20,7 @@ function modifiedSound = soundITD(originalSound,Fs,ITD,lagChannel)
     else 
         modifiedSound(1,:) = [originalSound(1,:) extraSamples];
         modifiedSound(2,:) = [extraSamples originalSound(2,:)];        
-    end    
+    end
+    LeftChannel = modifiedSound(1,:);
+    RightChannel = modifiedSound(2,:);
 end

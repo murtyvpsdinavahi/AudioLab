@@ -399,6 +399,62 @@ uicontrol('Parent',hEditActionsPanel,'Unit','Normalized', ...
     'Style','pushbutton','String','Push','FontSize',fontSizeMedium,...
     'Callback',{@Push_Callback});
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Binaural Panel %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+hBinauralPanel = uipanel('Title','Binaural Hearing','fontSize', fontSizeLarge, ...
+    'Unit','Normalized','Position',[panelStartPosX+2*panelWidth 0 panelWidth panelHeight]);
+
+
+uicontrol('Parent',hBinauralPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+9*textHeight textWidth textHeight],...
+    'Style','text','String','Sound Index','FontSize',fontSizeMedium);
+
+hBinauralSoundIndex = uicontrol('Parent',hBinauralPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, 'Position', ...
+    [editStartPosX textStartPosY+9*textHeight editWidth textHeight], ...
+    'Style','edit','FontSize',fontSizeMedium);
+
+uicontrol('Parent',hBinauralPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+8*textHeight textWidth textHeight],...
+    'Style','text','String','ITD (microseconds)','FontSize',fontSizeMedium);
+
+hITD = uicontrol('Parent',hBinauralPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, 'Position', ...
+    [editStartPosX textStartPosY+8*textHeight editWidth textHeight], ...
+    'Style','edit','FontSize',fontSizeMedium);
+
+uicontrol('Parent',hBinauralPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+7*textHeight textWidth textHeight],...
+    'Style','text','String','Direction','FontSize',fontSizeMedium);
+
+hLagChannel = uicontrol('Parent',hBinauralPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, 'Position', ...
+    [editStartPosX textStartPosY+7*textHeight editWidth textHeight], ...
+    'Style','popup','string','Right|Left','FontSize',fontSizeMedium);
+
+uicontrol('Parent',hBinauralPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+6*textHeight 1 textHeight],...
+    'Style','pushbutton','String','Create','FontSize',fontSizeMedium,...
+    'Callback',{@CreateBinaural_Callback});
+
+uicontrol('Parent',hBinauralPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+5*textHeight 1 textHeight],...
+    'Style','pushbutton','String','Play','FontSize',fontSizeMedium,...
+    'Callback',{@PlayBinaural_Callback});
+
+uicontrol('Parent',hBinauralPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+4*textHeight textWidth textHeight],...
+    'Style','pushbutton','String','Append with Sound Index','FontSize',fontSizeMedium,...
+    'Callback',{@AppendBinaural_Callback});
+
+hAppendSoundIndex = uicontrol('Parent',hBinauralPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, 'Position', ...
+    [editStartPosX textStartPosY+4*textHeight editWidth textHeight], ...
+    'Style','edit','FontSize',fontSizeMedium);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Plots %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -628,6 +684,8 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
         timeAxis=evalin('base','timeAxis');
         Fs = str2double(get(hSoundFs,'string')); % sampling frequency (Hz)
         SoundType = get(hSoundType,'val');
+        soundDur = str2double(get(hSoundDur,'string')); % Sound duration (ms)
+        
         if SoundType == 4
             Fs = evalin('base', 'fs');            
         end
@@ -635,7 +693,7 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
         audioPlayer = audioplayer(soundFile(SoundIndex,:),Fs);
         disp('Playing Sound');
         audioPlayer.play;
-        pause(1);
+        pause(soundDur/1000);
     end
 
     function cla_Callback(~,~)
@@ -816,6 +874,8 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
     function PlayEdit_Callback(~,~)
         SoundType = get(hSoundType,'val');
         soundFile=evalin('base','EditedSound');
+        soundDur = str2double(get(hSoundDur,'string')); % Sound duration (ms)
+        
         Fs = str2double(get(hSoundFs,'string')); % sampling frequency (Hz)
         
         if SoundType == 4
@@ -825,7 +885,7 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
         audioPlayerEdit = audioplayer(soundFile,Fs);
         disp('Playing Sound');
         audioPlayerEdit.play;
-        pause(1);
+        pause(soundDur/1000);
     end
 
     function Push_Callback(~,~)
@@ -838,5 +898,67 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
         soundFile=[soundFile;EditedSound];
         assignin('base','soundFile',soundFile);
         assignin('base','unmodSoundFile',unmodSoundFile);        
+    end
+
+    function CreateBinaural_Callback(~,~)
+         % initialise
+        
+        binSoundIndex = str2double(get(hBinauralSoundIndex,'string')); % Sound index
+        soundDur = str2double(get(hSoundDur,'string')); % Sound duration (ms)
+        Fs = str2double(get(hSoundFs,'string')); % sampling frequency (Hz) of sound
+        ITDelay = str2double(get(hITD,'string')); % ITD (microseconds)
+        LagChannelIndex = get(hLagChannel,'val');
+        
+        if LagChannelIndex == 1
+            LagChannel = 'Left';
+        else
+            LagChannel = 'Right';
+        end
+        
+        soundFile = evalin('base','soundFile');
+        OriginalSound = soundFile(binSoundIndex,:);
+        
+        [~,LeftChannelDel, RightChannelDel] = soundITD(OriginalSound,Fs,ITDelay,LagChannel);
+        
+        startTime = 0; 
+        endTime = soundDur/1000;
+        
+        LeftChannel = soundTrimToTime(LeftChannelDel,Fs,startTime,endTime);
+        RightChannel = soundTrimToTime(RightChannelDel,Fs,startTime,endTime);
+        
+        LeftExist = evalin('base','(exist(''LeftSoundFile'',''var''))');
+        if LeftExist == 0
+            LeftSoundFile = [];
+        else
+            LeftSoundFile=evalin('base','LeftSoundFile');
+        end
+        
+        RightExist = evalin('base','(exist(''RightSoundFile'',''var''))');
+        if RightExist == 0
+            RightSoundFile = [];            
+        else
+            RightSoundFile=evalin('base','RightSoundFile');            
+        end
+        
+        LeftSoundFile = [LeftSoundFile;LeftChannel];
+        RightSoundFile = [RightSoundFile;RightChannel];
+        
+        assignin('base','LeftSoundFile',LeftSoundFile);
+        assignin('base','RightSoundFile',RightSoundFile);
+    end
+
+    function PlayBinaural_Callback(~,~)
+        Fs = str2double(get(hSoundFs,'string')); % sampling frequency (Hz) of sound
+        soundDur = str2double(get(hSoundDur,'string')); % Sound duration (ms)
+        binSoundIndex = str2double(get(hBinauralSoundIndex,'string')); % Sound index
+        LeftSoundFile = evalin('base','LeftSoundFile');
+        RightSoundFile = evalin('base','RightSoundFile');
+        
+        BinauralFile = [LeftSoundFile(binSoundIndex,:);RightSoundFile(binSoundIndex,:)];
+        BinauralFile=BinauralFile';
+        
+        BinauralPlayer = audioplayer(BinauralFile,Fs);
+        BinauralPlayer.play;
+        pause(soundDur/1000);
     end
 end
