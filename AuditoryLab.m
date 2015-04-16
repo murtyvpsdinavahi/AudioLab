@@ -49,7 +49,7 @@ uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
 hSoundType = uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, 'Position', ...
     [editStartPosX textStartPosY+9*textHeight editWidth textHeight], ...
-    'Style','popup','String','Sinusoidal|Linear Chirp|Exp. Chirp|Imported Sound','FontSize',fontSizeMedium);
+    'Style','popup','String','Sinusoidal','FontSize',fontSizeMedium);
 
 
 uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
@@ -64,32 +64,32 @@ hSoundIndex = uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
 
 uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'Position',[textStartPosX textStartPosY+7*textHeight textWidth textHeight],...
-    'Style','text','String','Base Freq (Hz)','FontSize',fontSizeMedium);
+    'Style','text','String','Lowest Freq (Hz)','FontSize',fontSizeMedium);
 
 hBaseFreq = uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, ...
     'Position',[editStartPosX textStartPosY+7*textHeight editWidth textHeight], ...
-    'Style','edit','String','500','FontSize',fontSizeMedium);
+    'Style','edit','String','250','FontSize',fontSizeMedium);
 
 
 uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'Position',[textStartPosX textStartPosY+6*textHeight textWidth textHeight],...
-    'Style','text','String','Total Freqs','FontSize',fontSizeMedium);
+    'Style','text','String','No. of Octaves','FontSize',fontSizeMedium);
 
-hTotalFreq = uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
+hOct = uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, ...
     'Position',[editStartPosX textStartPosY+6*textHeight editWidth textHeight], ...
-    'Style','edit','String','10','FontSize',fontSizeMedium);
+    'Style','edit','String','5','FontSize',fontSizeMedium);
 
 
 uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'Position',[textStartPosX textStartPosY+5*textHeight textWidth textHeight],...
-    'Style','text','String','Freqs/octave','FontSize',fontSizeMedium);
+    'Style','text','String','Freq/octave','FontSize',fontSizeMedium);
 
 hOctFreq = uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, ...
     'Position',[editStartPosX textStartPosY+5*textHeight editWidth textHeight], ...
-    'Style','edit','String','1','FontSize',fontSizeMedium);
+    'Style','edit','String','20','FontSize',fontSizeMedium);
 
 
 uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
@@ -109,17 +109,17 @@ uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
 hSoundFs = uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, ...
     'Position',[editStartPosX textStartPosY+3*textHeight editWidth textHeight], ...
-    'Style','edit','String','20000','FontSize',fontSizeMedium);
+    'Style','edit','String','16384','FontSize',fontSizeMedium);
 
 
 uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'Position',[textStartPosX textStartPosY+2*textHeight textWidth textHeight],...
-    'Style','text','String','Phases of different freqs','FontSize',fontSizeMedium);
+    'Style','text','String','Phase of different freqs.','FontSize',fontSizeMedium);
 
 hFreqPhase = uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, ...
     'Position',[editStartPosX textStartPosY+2*textHeight editWidth textHeight], ...
-    'Style','popup','String','Zero|Random','FontSize',fontSizeMedium);
+    'Style','popup','String','Random|Not random|Load|Save','FontSize',fontSizeMedium);
 
 
 uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
@@ -129,7 +129,8 @@ uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
 hFreqSeperationType = uicontrol('Parent',hSoundPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, 'Position', ...
     [editStartPosX textStartPosY+1*textHeight editWidth textHeight], ...
-    'Style','popup','String','Linear|Log 2','FontSize',fontSizeMedium);
+    'Style','popup','String','Log 2|Harmonic','FontSize',fontSizeMedium);
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Modulation Panel %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -145,89 +146,167 @@ uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
 hModType = uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, 'Position', ...
     [editStartPosX textStartPosY+9*textHeight editWidth textHeight], ...
-    'Style','popup','String','None|DMR|Ripple Noise','FontSize',fontSizeMedium);
+    'Style','popup','String','Moving ripple','FontSize',fontSizeMedium);
 
 uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
     'Position',[textStartPosX textStartPosY+8*textHeight textWidth textHeight],...
-    'Style','text','String','Inst. Modulation Rate (Hz)','FontSize',fontSizeMedium);
+    'Style','text','String','Ripple velocity (Hz)','FontSize',fontSizeMedium);
 
 hModRate = uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, ...
     'Position',[editStartPosX textStartPosY+8*textHeight editWidth textHeight], ...
-    'Style','edit','String','10','FontSize',fontSizeMedium);
-
+    'Style','edit','String','8','FontSize',fontSizeMedium);
 
 uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
     'Position',[textStartPosX textStartPosY+7*textHeight textWidth textHeight],...
-    'Style','text','String','Ripple Density (cyc/oct)','FontSize',fontSizeMedium);
+    'Style','text','String','Ripple density (cyc/oct)','FontSize',fontSizeMedium);
 
 hRippleDensity = uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, ...
     'Position',[editStartPosX textStartPosY+7*textHeight editWidth textHeight], ...
-    'Style','edit','String','0','FontSize',fontSizeMedium);
-
+    'Style','edit','String','1','FontSize',fontSizeMedium);
 
 uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
     'Position',[textStartPosX textStartPosY+6*textHeight textWidth textHeight],...
-    'Style','text','String','Modulation Depth (dB)','FontSize',fontSizeMedium);
+    'Style','text','String','Ripple Amplitude (0-1)','FontSize',fontSizeMedium);
 
 hModDepth = uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
     'BackgroundColor', backgroundColor, ...
     'Position',[editStartPosX textStartPosY+6*textHeight editWidth textHeight], ...
-    'Style','edit','String','10','FontSize',fontSizeMedium);
+    'Style','edit','String','1','FontSize',fontSizeMedium);
+
+uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+5*textHeight textWidth textHeight],...
+    'Style','text','String','Background Loudness (dB)','FontSize',fontSizeMedium);
+
+hBGLoudness = uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, ...
+    'Position',[editStartPosX textStartPosY+5*textHeight editWidth textHeight], ...
+    'Style','edit','String','60','FontSize',fontSizeMedium);
+
+uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+4*textHeight textWidth textHeight],...
+    'Style','text','String','Roll off (dB)','FontSize',fontSizeMedium);
+
+hRollOff = uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, ...
+    'Position',[editStartPosX textStartPosY+4*textHeight editWidth textHeight], ...
+    'Style','edit','String','0','FontSize',fontSizeMedium);
+
+uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+3*textHeight textWidth textHeight],...
+    'Style','text','String','Modulation Depth (0-1)','FontSize',fontSizeMedium);
+
+hMo = uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, ...
+    'Position',[editStartPosX textStartPosY+3*textHeight editWidth textHeight], ...
+    'Style','edit','String','0.9','FontSize',fontSizeMedium);
+
+uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+2*textHeight textWidth textHeight],...
+    'Style','text','String','Max. temporal vel. (Hz)','FontSize',fontSizeMedium);
+
+hwM = uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, ...
+    'Position',[editStartPosX textStartPosY+2*textHeight editWidth textHeight], ...
+    'Style','edit','String','120','FontSize',fontSizeMedium);
+
+
+uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+1*textHeight textWidth textHeight],...
+    'Style','text','String','Phase (x*pi)','FontSize',fontSizeMedium);
+
+hEnPhi = uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, ...
+    'Position',[editStartPosX textStartPosY+1*textHeight editWidth textHeight], ...
+    'Style','edit','String','0','FontSize',fontSizeMedium);
+
+uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+0*textHeight textWidth textHeight],...
+    'Style','text','String','Amplitude flag','FontSize',fontSizeMedium);
+
+hAF = uicontrol('Parent',hModulationPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, ...
+    'Position',[editStartPosX textStartPosY+0*textHeight editWidth textHeight], ...
+    'Style','popup','String','Linear','FontSize',fontSizeMedium);
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Actions Panel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ButtonWidth = 0.5;
 
 hActionsPanel = uipanel('Title','Actions','fontSize', fontSizeLarge, ...
     'Unit','Normalized','Position',[panelStartPosX+2*panelWidth panelStartPosY panelWidth panelHeight]);
 
 
 uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
-    'Position',[textStartPosX textStartPosY+9*textHeight 1 textHeight],...
+    'Position',[textStartPosX textStartPosY+9*textHeight ButtonWidth textHeight],...
     'Style','pushbutton','String','Create','FontSize',fontSizeMedium,...
     'Callback',{@Create_Callback});
 
+uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX+ButtonWidth textStartPosY+9*textHeight ButtonWidth textHeight],...
+    'Style','pushbutton','String','Ramp','FontSize',fontSizeMedium,...
+    'Callback',{@Ramp_Callback});
 
 uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
-    'Position',[textStartPosX textStartPosY+8*textHeight 1 textHeight],...
+    'Position',[textStartPosX textStartPosY+8*textHeight ButtonWidth textHeight],...
     'Style','pushbutton','String','Plot','FontSize',fontSizeMedium,...
     'Callback',{@Plot_Callback});
 
+uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX+ButtonWidth textStartPosY+8*textHeight ButtonWidth/2 textHeight],...
+    'Style','text','String','sec','FontSize',fontSizeMedium);
+
+hRampTime = uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, ...
+    'Position',[textStartPosX+((3/2)*ButtonWidth) textStartPosY+8*textHeight ButtonWidth/2 textHeight], ...
+    'Style','edit','String','0.01','FontSize',fontSizeMedium);
 
 uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
-    'Position',[textStartPosX textStartPosY+7*textHeight 1 textHeight],...
-    'Style','pushbutton','String','Analyse','FontSize',fontSizeMedium,...
-    'Callback',{@Analyse_Callback});
-
-
-uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
-    'Position',[textStartPosX textStartPosY+6*textHeight 1 textHeight],...
-    'Style','pushbutton','String','Normalise','FontSize',fontSizeMedium,...
-    'Callback',{@Normalise_Callback});
-
-
-uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
-    'Position',[textStartPosX textStartPosY+5*textHeight 1 textHeight],...
+    'Position',[textStartPosX+ButtonWidth textStartPosY+7*textHeight ButtonWidth textHeight],...
     'Style','pushbutton','String','Play','FontSize',fontSizeMedium,...
     'Callback',{@Play_Callback});
 
+uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+7*textHeight ButtonWidth textHeight],...
+    'Style','pushbutton','String','Analyse','FontSize',fontSizeMedium,...
+    'Callback',{@Analyse_Callback});
 
 uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
-    'Position',[textStartPosX textStartPosY+4*textHeight 1 textHeight],...
+    'Position',[textStartPosX+ButtonWidth textStartPosY+6*textHeight ButtonWidth textHeight],...
     'Style','pushbutton','String','Save','FontSize',fontSizeMedium,...
     'Callback',{@Save_Callback});
 
+uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+6*textHeight ButtonWidth textHeight],...
+    'Style','pushbutton','String','Normalise','FontSize',fontSizeMedium,...
+    'Callback',{@Normalise_Callback});
 
 uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
-    'Position',[textStartPosX textStartPosY+3*textHeight 1 textHeight],...
+    'Position',[textStartPosX+ButtonWidth textStartPosY+5*textHeight ButtonWidth/2 textHeight],...
+    'Style','text','String','(.wav)','FontSize',fontSizeMedium);
+
+uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX textStartPosY+5*textHeight ButtonWidth textHeight],...
     'Style','pushbutton','String','Clear Plot','FontSize',fontSizeMedium,...
     'Callback',{@cla_Callback});
 
+hFileName = uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
+    'BackgroundColor', backgroundColor, ...
+    'Position',[textStartPosX+((3/2)*ButtonWidth) textStartPosY+5*textHeight ButtonWidth/2 textHeight], ...
+    'Style','edit','FontSize',fontSizeMedium);
+
 uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
-    'Position',[textStartPosX textStartPosY+2*textHeight 1 textHeight],...
+    'Position',[textStartPosX textStartPosY+4*textHeight ButtonWidth textHeight],...
     'Style','pushbutton','String','Clear Workspace','FontSize',fontSizeMedium,...
+    'Callback',{@claWS_Callback});
+
+hCompare = uicontrol('Parent',hActionsPanel,'Unit','Normalized', ...
+    'Position',[textStartPosX+(ButtonWidth) textStartPosY+4*textHeight ButtonWidth textHeight],...
+    'Style','togglebutton','String','Compare','FontSize',fontSizeMedium,...
     'Callback',{@claWS_Callback});
 
 
@@ -309,40 +388,6 @@ hSound2Amplitude = uicontrol('Parent',hEditPanel,'Unit','Normalized', ...
     'Style','edit','FontSize',fontSizeMedium);
 
 
-% uicontrol('Parent',hEditPanel,'Unit','Normalized', ...
-%     'Position',[textStartPosX textStartPosY+3*textHeight textWidth textHeight],...
-%     'Style','text','String','Translate At Time','FontSize',fontSizeMedium);
-% 
-% hTranslateAtTime = uicontrol('Parent',hEditPanel,'Unit','Normalized', ...
-%     'BackgroundColor', backgroundColor, ...
-%     'Position',[editStartPosX textStartPosY+3*textHeight editWidth textHeight], ...
-%     'Style','edit','FontSize',fontSizeMedium);
-% 
-% 
-% uicontrol('Parent',hEditPanel,'Unit','Normalized', ...
-%     'Position',[textStartPosX textStartPosY+3*textHeight textWidth textHeight],...
-%     'Style','text','String','Translate By Time','FontSize',fontSizeMedium);
-% 
-% hTranslateByTime = uicontrol('Parent',hEditPanel,'Unit','Normalized', ...
-%     'BackgroundColor', backgroundColor, ...
-%     'Position',[editStartPosX textStartPosY+3*textHeight editWidth textHeight], ...
-%     'Style','edit','FontSize',fontSizeMedium);
-% 
-% 
-% uicontrol('Parent',hEditPanel,'Unit','Normalized', ...
-%     'Position',[textStartPosX textStartPosY+2*textHeight textWidth textHeight],...
-%     'Style','text','String','Break Time','FontSize',fontSizeMedium);
-% 
-% hBreakFromTime = uicontrol('Parent',hEditPanel,'Unit','Normalized', ...
-%     'BackgroundColor', backgroundColor, ...
-%     'Position',[editStartPosX textStartPosY+2*textHeight editWidth/2 textHeight], ...
-%     'Style','edit','FontSize',fontSizeMedium);
-% 
-% hBreakTillTime = uicontrol('Parent',hEditPanel,'Unit','Normalized', ...
-%     'BackgroundColor', backgroundColor, ...
-%     'Position',[editStartPosX+editWidth/2 textStartPosY+2*textHeight editWidth/2 textHeight], ...
-%     'Style','edit','FontSize',fontSizeMedium);
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Edit Actions Panel %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -374,12 +419,6 @@ uicontrol('Parent',hEditActionsPanel,'Unit','Normalized', ...
     'Position',[textStartPosX textStartPosY+6*textHeight 1 textHeight],...
     'Style','pushbutton','String','Stitch','FontSize',fontSizeMedium,...
     'Callback',{@Stitch_Callback});
-
-
-% uicontrol('Parent',hEditActionsPanel,'Unit','Normalized', ...
-%     'Position',[textStartPosX textStartPosY+5*textHeight 1 textHeight],...
-%     'Style','pushbutton','String','Trim','FontSize',fontSizeMedium,...
-%     'Callback',{@Trim_Callback});
 
 
 uicontrol('Parent',hEditActionsPanel,'Unit','Normalized', ...
@@ -467,161 +506,154 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     function Create_Callback(~,~)
+%% Initialisation
+        Am   = str2double(get(hModDepth,'string')); % Modulation depth of the envelope
+        w = str2double(get(hModRate,'string')); % Instantaneous Modulation Rate (Hz)
+        Om   = str2double(get(hRippleDensity,'string')); % Capital Omega (cyc/oct)
+        Ph = str2double(get(hEnPhi,'string'))*pi;
         
-        % initialise
+        T0 = str2double(get(hSoundDur,'string')); % Sound duration (ms)
+        f0 = str2double(get(hBaseFreq,'string')); % base frequency (Hz)
+        BW = str2double(get(hOct,'string')); % Total no. of octaves
+        SF = str2double(get(hSoundFs,'string')); % sampling frequency (Hz) of sound
+        CF = get(hFreqSeperationType,'val');
+        dfA = str2double(get(hOctFreq,'string'));
+        df = 1/dfA;
+        RO = str2double(get(hRollOff,'string'));
+        AF = (get(hAF,'val'));
+        Mo = str2double(get(hMo,'string'));
+        wM = str2double(get(hwM,'string'));
+        PhFlag = get(hFreqPhase,'val')-1;
         
-        f1 = str2double(get(hBaseFreq,'string')); % base frequency (Hz)
-        nFreq = str2double(get(hTotalFreq,'string')); % Total no. of Frequencies
-        NfrOct = str2double(get(hOctFreq,'string')); % No. of frequencies per octave
-        soundDur = str2double(get(hSoundDur,'string')); % Sound duration (ms)
-        Fs = str2double(get(hSoundFs,'string')); % sampling frequency (Hz) of sound
-        FreqPhase = get(hFreqPhase,'val');
+        % Others
         SoundType = get(hSoundType,'val');
-        FreqSeperationType = get(hFreqSeperationType,'val');
-                
-        Fm = str2double(get(hModRate,'string')); % Instantaneous Modulation Rate (Hz)
-        rippleDensity   = str2double(get(hRippleDensity,'string')); % Capital Omega (cyc/oct)
         ModType = get(hModType,'val');
-        ModDepth   = str2double(get(hModDepth,'string')); % Modulation depth of the envelope (dB)
-        
-        if SoundType == 4
-            Fs = evalin('base', 'fs');
-            soundData = evalin('base', 'data');
-            soundDur = (size(soundData,1)/Fs)*1000;
-        end
+        BGLoudness = str2double(get(hBGLoudness,'string')); % Background Loudness (dB)
+        CompareVal = get(hCompare,'val');
         
         soundExist = evalin('base','(exist(''soundFile'',''var''))');
         if soundExist == 0
             soundFile = [];
             unmodSoundFile = [];
+            Frequencies=[];
+            XkV = [];
         else
             soundFile=evalin('base','soundFile');
             unmodSoundFile=evalin('base','unmodSoundFile');
-        end
-                
-        % calculations
-        
-        FreqStep = 1:1:nFreq; % every frequency step
-        Xk = FreqStep/NfrOct; % Octave frequency axis relative to f1
-        if FreqSeperationType == 1
-            fk = f1 * Xk; % linear frequency axis (Hz)
-        else
-            fk = f1 * 2.^Xk; % log 2 frequency axis (Hz)
+            Frequencies=evalin('base','Frequencies');
+            XkV = evalin('base','XkV');
         end
         
-        ChirpRate = (fk(nFreq)-f1)/(soundDur/1000);
-        lengthSound = round((soundDur/1000)*Fs); % # Samples for Rippled Noise
-        timeAxis  = 0:1/Fs:(lengthSound-1)/Fs; % Time Axis (s)
+        T0=T0/1000;
+        lengthSound = round((T0)*SF); 
+        timeAxis  = 0:1/SF:(lengthSound-1)/SF; % Time Axis (s)
 
-        % Calculating SDMR
-        if ModType==2
-            disp('Calculating SDMR');
-            for T=1:length(timeAxis)
-                for X=1:nFreq
-                    Sdmr(T,X) = (ModDepth/2)*(sin((2*pi*rippleDensity*Xk(X)) + (2*pi*Fm*timeAxis(T))));
-                end
-            end
+        rippleList = [Am w Om Ph];
+        
+        cond = [T0,f0,BW,SF,CF,df,RO,AF,Mo,wM,4];
+        comp_phs_file='C:\Users\LabComputer6\Documents\MATLAB\Programs\Downloaded\baphy\SoundObjects\@Torc\Sounds\save_comp_phs';
+        
+        
+        
+        
+%% Calculations  
+
+
+%% Frequency Axis
+
+        if CF==2	%compute tones freqs
+            R1 = round(2.^([-1 1]*BW/2)*f0/df); 
+            fk = df*(R1(1):R1(2))';
+        else	%compute log-spaced tones freqs
+            R1 = round((BW/2)/df); 
+            fk = f0*2.^((-R1:R1)*df)';
+        end;
+        
+        Xk = log2(fk/f0);
+        f_env_size = length(fk); 
+         
+% Ph2 = Ph/pi-1/2;
+% rippleList2 = rippleList; rippleList2(:,4) = Ph2;
+% cond2=[T0, f0, SF, BW, RO, df, Mo];        
+% [s4,fk,Xk,th] = mvripfft_Shihab_Original(rippleList2, cond2);
+%% Envelope
+        if ModType==1
+            disp('Calculating Envelope profile for moving ripple...');
+            EnProfile = makeSumRipples(rippleList,Xk,timeAxis,Mo);            
         end
 
-        % Calculating SLIN
-        disp('Calculating SLIN');
-        if ModType == 1 % No Modulation
-            for T=1:length(timeAxis)
-                for X=1:nFreq
-                    Slin(T,X)=ModDepth;
-                end
-            end
-        else    
-            for T=1:length(timeAxis)
-                for X=1:nFreq
-                    Slin(T,X)=10^(((Sdmr(T,X))-(ModDepth/2))/20);
-                end
-            end
-        end
+%% Waveform
+        switch PhFlag
+        case 0
+            th = 2*pi*rand(f_env_size,1);	% component phase, theta
+        case 1
+            th = zeros(f_env_size,1);
+        case 2
+            fp = load(comp_phs_file);
+            th = fp.th;
+        case 3
+            th = 2*pi*rand(f_env_size,1);	% component phase, theta
+            save(comp_phs_file,'th');%Save component phases
+        otherwise
+            error('Invalid selection');
+            return;
+        end;
+         
+        r = 10.^(-Xk*RO/20);		% roll-off, RO = 20log10(r)
         
-        % Calculating the acoustic waveform
-        disp('Calculating the acoustic waveform');
- 
-        if SoundType == 1 % Sinusoidal carrier
-             for k = 1:nFreq
-                if FreqPhase == 1
-                  Phi=0;
-                else
-                  Phi=2*pi*rand(1);
-                end
-                carrier=Slin(:,k)'.*sin(2*pi* fk(k) .* timeAxis + Phi);
-                unmodCarrier = sin(2*pi* fk(k) .* timeAxis + Phi);
-                if k==1
-                    unmodSoundFileData= unmodCarrier;
-                    soundFileData= carrier;                    
-                else
-                    unmodSoundFileData = unmodSoundFileData + unmodCarrier;
-                    soundFileData = soundFileData + carrier;
-                end
-             end
-             
-        elseif SoundType == 2 % Linear chirp
-            for k = 1:nFreq
-                if FreqPhase == 1
-                  Phi=0;
-                else
-                  Phi=2*pi*rand(1);
-                end
-                carrier=Slin(:,k)'.*(sin(2*pi* (fk(k) .* timeAxis + ChirpRate *(timeAxis.*timeAxis)) + Phi));
-                unmodCarrier = sin(2*pi* (fk(k) .* timeAxis + ChirpRate *(timeAxis.*timeAxis)) + Phi);
-                if k==1
-                    unmodSoundFileData= unmodCarrier;
-                    soundFileData= carrier;                    
-                else
-                    unmodSoundFileData = unmodSoundFileData + unmodCarrier;
-                    soundFileData = soundFileData + carrier;
-                end
-             end
-             
-        elseif SoundType == 3 % Exponential Chirp
-            for k = 1:nFreq
-                if FreqPhase == 1
-                  Phi=0;
-                else
-                  Phi=2*pi*rand(1);
-                end
-                carrier=Slin(:,k)'.*(sin(2*pi*f1*(((ChirpRate.^timeAxis)-1)/(log(ChirpRate))) + Phi));
-                unmodCarrier = sin(2*pi*f1*(((ChirpRate.^timeAxis)-1)/(log(ChirpRate))) + Phi);
-                if k==1
-                    unmodSoundFileData= unmodCarrier;
-                    soundFileData= carrier;                    
-                else
-                    unmodSoundFileData = unmodSoundFileData + unmodCarrier;
-                    soundFileData = soundFileData + carrier;
-                end
-            end
-            
-        else
-            for k = 1:nFreq
-                if FreqPhase == 1
-                  Phi=0;
-                else
-                  Phi=2*pi*rand(1);
-                end
-                carrier=Slin(:,k)'.*(soundData');
-                unmodCarrier = soundData';
-                if k==1
-                    unmodSoundFileData= unmodCarrier;
-                    soundFileData= carrier;                    
-                else
-                    unmodSoundFileData = unmodSoundFileData + unmodCarrier;
-                    soundFileData = soundFileData + carrier;
-                end
-            end
-             
+        unmodSoundFileData = zeros(1,length(timeAxis));
+        soundFileData = zeros(1,length(timeAxis));
+        for q=1:length(fk)
+            unmodCarrier = (cos(2*pi*(round(fk(q)*T0)/T0)*timeAxis + th(q)));
+            component1(q,:) = r(q)*((EnProfile(q,:)) .* unmodCarrier);
+
+            unmodSoundFileData = unmodSoundFileData + unmodCarrier;
+            soundFileData = soundFileData + component1(q,:);            
         end
+
         
+%% Comparison
+if CompareVal == 1
+    
+%     disp('Calculating components from Shihab code');
+%     Ph2 = Ph/pi-1/2;
+%     rippleList2 = rippleList; rippleList2(:,4) = Ph2;
+%     cond2=[T0, f0, SF, BW, RO, df, Mo];        
+%     NormFlag=1;
+%     s3 = mvripfft_Shihab(rippleList2, cond2, th,fk,Xk,r);
+%     componentA=soundFileData/max(soundFileData);
+%     componentB=s3/max(s3);
+%     compA = componentA;
+%     compB = componentB';
+%     compPlot(compA,compB,NormFlag);
+% %     compPlotFFT(compA,compB,NormFlag);
+    
+    disp('Calculating components from Baphy code');
+    [s2,profile2,f_env2,t_env2,component2] = multimvripfft1_new(rippleList, cond,comp_phs_file,th,fk,Xk); % Using Baphy Code for comparison    
+    disp('Start of iteration');
+    for i=1:size(component1,1)
+        comp1 = component1(i,:);
+        comp2 = component2(i,:);
+        comp1=comp1;%/max(comp1);
+        comp2=comp2;%/max(comp2);
+        compPlot(comp1,comp2,0);
+        disp(i);
+        pause;        
+    end
+end
+%% Adding to workspace
         unmodSoundFile = [unmodSoundFile;unmodSoundFileData];
         soundFile=[soundFile;soundFileData];
+        Frequencies = [Frequencies;fk];
+        Profile=EnProfile;
+        XkV = [XkV;Xk];
         
         assignin('base','timeAxis',timeAxis);
         assignin('base','soundFile',soundFile);
         assignin('base','unmodSoundFile',unmodSoundFile);
+        assignin('base','Frequencies',Frequencies);
+        assignin('base','Profile',Profile);
+        assignin('base','XkV',XkV);
         
         plot(hSoundPlot,timeAxis,soundFile);
     end
@@ -634,36 +666,16 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
     end
 
     function Analyse_Callback(~,~)
-        figure; hold on; 
-        
-        hUnmodSoundPlot = subplot('Position',[0.02 0.70 0.45 0.28]);
-        hModSoundPlot = subplot('Position',[0.5 0.70 0.45 0.28]);
-        
-        hUnmodPowerPlot = subplot('Position',[0.02 0.38 0.45 0.28]);
-        hModPowerPlot = subplot('Position',[0.5 0.38 0.45 0.28]);
-        
-        hUnmodPowerChangePlot = subplot('Position',[0.02 0.05 0.45 0.28]);
-        hModPowerChangePlot = subplot('Position',[0.5 0.05 0.45 0.28]);
         
         soundFile=evalin('base','soundFile');
         timeAxis=evalin('base','timeAxis');
         unmodSoundFile=evalin('base','unmodSoundFile');
+        Profile=evalin('base','Profile');
+        Xk=evalin('base','XkV');
         Fs = str2double(get(hSoundFs,'string')); % sampling frequency (Hz)
         SoundIndex = str2double(get(hSoundIndex,'string')); % Sound Index
-
-        % Raw Power Spectrum
-        params=defparams([3 5],Fs);
         
-        plot(hUnmodSoundPlot,timeAxis,unmodSoundFile(SoundIndex,:));
-        plot(hModSoundPlot,timeAxis,soundFile(SoundIndex,:));
-        
-        [spec,tim,fre]=mtspecgramc(unmodSoundFile(SoundIndex,:)',[0.1 0.01],params);
-        pcolor(hUnmodPowerPlot,tim,fre,log10(spec')); shading(hUnmodPowerPlot, 'interp');
-        pchangespecgramc(unmodSoundFile(SoundIndex,:),timeAxis,params,[0 0.1],0.01,Fs,hUnmodPowerChangePlot);
-        
-        [spec2,tim2,fre2]=mtspecgramc(soundFile(SoundIndex,:)',[0.1 0.01],params);
-        pcolor(hModPowerPlot,tim2,fre2,log10(spec2')); shading(hModPowerPlot, 'interp');
-        pchangespecgramc(soundFile(SoundIndex,:),timeAxis,params,[0 0.1],0.01,Fs,hModPowerChangePlot);
+        plotAnalysis(soundFile,timeAxis,unmodSoundFile,Profile,Xk,Fs,SoundIndex)
     end
 
     function Normalise_Callback(~,~)
@@ -678,22 +690,43 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
         Analyse_Callback;
     end
 
+    function Ramp_Callback(~,~)
+        SoundIndex = str2double(get(hSoundIndex,'string')); % Sound Index
+        rampTime = str2double(get(hRampTime,'string'));
+        soundFile=evalin('base','soundFile');
+        unmodSoundFile=evalin('base','unmodSoundFile');
+        timeAxis=evalin('base','timeAxis');
+        [rampedSound] = rampSound(soundFile(SoundIndex,:),timeAxis,rampTime);
+        soundFile((SoundIndex+1),:)=rampedSound;
+        unmodSoundFile((SoundIndex+1),:)=soundFile(SoundIndex,:);
+        assignin('base','soundFile',soundFile);
+        assignin('base','unmodSoundFile',unmodSoundFile);
+        
+        plot(hSoundPlot,timeAxis,soundFile((SoundIndex+1),:));
+    end
+
     function Play_Callback(~,~)
         SoundIndex = str2double(get(hSoundIndex,'string')); % Sound Index
         soundFile=evalin('base','soundFile');
-        timeAxis=evalin('base','timeAxis');
         Fs = str2double(get(hSoundFs,'string')); % sampling frequency (Hz)
         SoundType = get(hSoundType,'val');
-        soundDur = str2double(get(hSoundDur,'string')); % Sound duration (ms)
-        
+                
         if SoundType == 4
             Fs = evalin('base', 'fs');            
         end
         
         audioPlayer = audioplayer(soundFile(SoundIndex,:),Fs);
         disp('Playing Sound');
-        audioPlayer.play;
-        pause(soundDur/1000);
+        audioPlayer.playblocking;
+    end
+
+    function Save_Callback(~,~)
+        FileName = get(hFileName,'string');
+        SoundIndex = str2double(get(hSoundIndex,'string'));
+        Fs = str2double(get(hSoundFs,'string')); 
+        soundFile=evalin('base','soundFile');
+        
+        audiowrite(['C:\Users\LabComputer6\Documents\MATLAB\Programs\Murty\Project related\Sounds\' FileName '.wav'],soundFile(SoundIndex,:),Fs);
     end
 
     function cla_Callback(~,~)
@@ -702,7 +735,7 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
     end
 
     function claWS_Callback(~,~)
-        evalin('base','clear all');
+        evalin('base','clear');
     end
 
     function Add_Callback(~,~)
@@ -892,12 +925,16 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
         EditedSound=evalin('base','EditedSound');
         unmodSoundFile=evalin('base','soundFile');
         soundFile=evalin('base','soundFile');
+        Frequencies = evalin('base','Frequencies');
         SoundIndex = str2double(get(hSound1Index,'string'));
         
         unmodSoundFile=[unmodSoundFile;soundFile(SoundIndex,:)];
         soundFile=[soundFile;EditedSound];
+        Frequencies = [Frequencies;Frequencies(SoundIndex,:)];
+        
         assignin('base','soundFile',soundFile);
-        assignin('base','unmodSoundFile',unmodSoundFile);        
+        assignin('base','unmodSoundFile',unmodSoundFile);
+        assignin('base','Frequencies',Frequencies);
     end
 
     function CreateBinaural_Callback(~,~)
@@ -960,5 +997,25 @@ hEditSoundPlot = subplot('Position',[0.5 0.05 0.45 0.40]);
         BinauralPlayer = audioplayer(BinauralFile,Fs);
         BinauralPlayer.play;
         pause(soundDur/1000);
+    end
+
+    function AppendBinaural_Callback(~,~)
+        
+        binSoundIndex = str2double(get(hBinauralSoundIndex,'string')); % Sound index
+        SoundIndex = str2double(get(hAppendSoundIndex,'string'));
+        
+        soundFile = evalin('base','soundFile');
+        LeftSoundFile = evalin('base','LeftSoundFile');
+        RightSoundFile = evalin('base','RightSoundFile');
+        
+        OriginalSound = soundFile(SoundIndex,:);
+        LeftSound = LeftSoundFile(binSoundIndex,:) + OriginalSound;
+        RightSound = RightSoundFile(binSoundIndex,:) + OriginalSound;
+        LeftSoundFile = [LeftSoundFile;LeftSound];
+        RightSoundFile = [RightSoundFile;RightSound];
+        
+        assignin('base','LeftSoundFile',LeftSoundFile);
+        assignin('base','RightSoundFile',RightSoundFile);    
+        
     end
 end
